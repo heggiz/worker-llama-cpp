@@ -14,10 +14,11 @@ filename = os.environ.get("FILENAME", "mistral-7b-v0.1.Q5_K_M.gguf")
 
 model_path = "/runpod-volume/" + filename
 
-urllib.request.urlretrieve(
-    "https://huggingface.co" + repository + "/resolve/main/" + filename,
-    model_path,
-)
+if os.path.isfile(model_path) == False:
+    urllib.request.urlretrieve(
+        "https://huggingface.co/" + repository + "/resolve/main/" + filename,
+        model_path,
+    )
 
 llm = Llama(
     model_path=model_path,
