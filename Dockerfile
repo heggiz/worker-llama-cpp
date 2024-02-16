@@ -6,6 +6,8 @@ FROM runpod/base:0.4.0-cuda11.8.0
 # Please refer to the base image's Dockerfile for more information before adding additional dependencies.
 # IMPORTANT: The base image overrides the default huggingface cache location.
 
+ENV CMAKE_ARGS="-DLLAMA_CUBLAS=on"
+
 
 # --- Optional: System dependencies ---
 # COPY builder/setup.sh /setup.sh
@@ -25,5 +27,7 @@ RUN python3.11 -m pip install --upgrade pip && \
 
 # Add src files (Worker Template)
 ADD src .
+
+RUN mkdir -p /runpod-volume/
 
 CMD python3.11 -u /handler.py
