@@ -5,7 +5,7 @@ from typing import Dict
 import runpod
 import urllib.request
 
-from llama_cpp import Llama, LLAMA_SPLIT_NONE, LLAMA_DEFAULT_SEED
+from llama_cpp import Llama, LlamaGrammar, LLAMA_SPLIT_NONE, LLAMA_DEFAULT_SEED
 
 # If your handler runs inference on a model, load the model here.
 # You will want models to be loaded into memory before starting serverless.
@@ -102,7 +102,7 @@ def handler(job: Dict[str, Dict]):
         model=model,
         stopping_criteria=stopping_criteria,
         logits_processor=logits_processor,
-        grammar=grammar,
+        grammar=LlamaGrammar.from_string(grammar) if grammar != None else None,
         logit_bias=logit_bias,
     )
 
